@@ -59,14 +59,20 @@
             font-size: 16px;
             cursor: pointer;
         }
+
+        .score {
+            font-size: 20px;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
     <div class="game-container">
         <h2>Number Sequence Game</h2>
+        <div class="score" id="score">Score: 0</div>
         <div class="sequence" id="sequenceDisplay"></div>
         <div class="input-container">
-            <label for="userInput">Enter the next number in the sequence: </label>
+            <label for="userInput">Enter the next number: </label>
             <input type="number" id="userInput" min="1" max="4">
         </div>
         <div class="gameover-message" id="gameOverMessage"></div>

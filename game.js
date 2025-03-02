@@ -1,107 +1,87 @@
-let gameSequence = [];
-let userSequence = [];
-let rounds = 4;
-let delay = 3000; // 2 seconds delay between numbers
+let currentNumber = 0; // The current number in the sequence
+let score = 0; // The player's score
+
+let delay = 2000; // 2 seconds delay before showing the number
 
 // Start a new game
 function startGame() {
-    gameSequence = [];
-    userSequence = [];
-    rounds = 0;
+    currentNumber = Math.floor(Math.random() * 4) + 1; // Start with a random number
+    score = 0; // Reset score
+    document.getElementById("score").textContent = `Score: ${score}`;
     document.getElementById("gameOverMessage").textContent = "";
     document.getElementById("restartButton").style.display = "none";
-    nextRound();
+    displayCurrentNumber();
 }
 
-// Generate the next number in the sequence
-function generateSequence() {
-    let num = Math.floor(Math.random() * 4) + 1; // Generate random number between 1 and 4
-    gameSequence.push(num);
-}
-
-// Display the current sequence for the user
-function displaySequence() {
+// Display the current number in the sequence
+function displayCurrentNumber() {
     let sequenceDisplay = document.getElementById("sequenceDisplay");
-    sequenceDisplay.innerHTML = ''; // Clear the previous sequence
-    let index = 0;
+    let color;
+    
+    switch (currentNumber) {
+        case 1:
+            color = "red";
+            break;
+        case 2:
+            color = "green";
+            break;
+        case 3:
+            color = "yellow";
+            break;
+        case 4:
+            color = "blue";
+            break;
+    }
 
-    let interval = setInterval(function () {
-        let number = gameSequence[index];
-        let color;
-        switch (number) {
-            case 1:
-                color = "red";
-                break;
-            case 2:
-                color = "green";
-                break;
-            case 3:
-                color = "yellow";
-                break;
-            case 4:
-                color = "blue";
-                break;
-        }
+    // Show the current number
+    sequenceDisplay.innerHTML = `<span style="color: ${color}; font-size: 50px;">${currentNumber}</span>`;
 
-        sequenceDisplay.innerHTML = `<span style="color: ${color}; font-size: 50px;">${number}</span>`;
-        index++;
-
-        if (index >= gameSequence.length) {
-            clearInterval(interval);
-            askUserForInput();
-        }
-    }, delay);
+    // Ask the user for input
+    askUserForInput();
 }
 
-// Prompt the user to input the next number in the sequence
+// Prompt the user to input the next number
 function askUserForInput() {
     let inputField = document.getElementById("userInput");
     inputField.disabled = false;
     inputField.value = ''; // Clear the previous input
-
     inputField.focus();
-    userSequence = []; // Reset the user's sequence at the start of each round
+
+    // Listen for the user's input
     inputField.addEventListener("input", checkUserInput);
 }
 
-// Check the user's input and compare with the game sequence
+// Check the user's input and compare it to the current number
 function checkUserInput() {
     let userInput = document.getElementById("userInput").value;
 
     if (userInput === "") return; // Do nothing if the input is empty
 
-    let currentRoundNumber = userSequence.length + 1;
+    // Check if the user's input matches the current number
+    if (parseInt(userInput) === currentNumber) {
+        // Correct input, increase score and move to the next round
+        score++;
+        document.getElementById("score").textContent = `Score: ${score}`;
 
-    if (parseInt(userInput) === gameSequence[userSequence.length]) {
-        userSequence.push(parseInt(userInput));
+        // Set the new number for the next round
+        currentNumber = Math.floor(Math.random() * 4) + 1;
 
-        // If the user has correctly input the entire sequence
-        if (userSequence.length === gameSequence.length) {
-            rounds++;
-            generateSequence(); // Add a new number to the sequence
-            setTimeout(displaySequence, 1000); // Wait a moment before showing the next sequence
-        }
+        // Wait for a moment before displaying the next number
+        setTimeout(displayCurrentNumber, 1000);
     } else {
-        endGame();
+        endGame(); // End the game if the input is incorrect
     }
 }
 
 // End the game and show the result
 function endGame() {
-    document.getElementById("gameOverMessage").textContent = `Game Over! You completed ${rounds} rounds.`;
+    document.getElementById("gameOverMessage").textContent = `Game Over! You scored ${score} points.`;
     document.getElementById("restartButton").style.display = "block";
     document.getElementById("userInput").disabled = true;
-}
-
-// Start the first round of the game
-function nextRound() {
-    generateSequence();
-    displaySequence();
 }
 
 // Initialize the game once the page is loaded
 window.onload = function () {
     startGame();
 };
-
 
