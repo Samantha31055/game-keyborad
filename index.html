@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Sequence Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        .game-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .game-container h2 {
+            margin-bottom: 20px;
+        }
+
+        .game-container .sequence {
+            font-size: 40px;
+            margin: 20px 0;
+        }
+
+        .input-container {
+            margin: 10px 0;
+        }
+
+        .input-container input {
+            font-size: 18px;
+            padding: 10px;
+            width: 50px;
+            text-align: center;
+        }
+
+        .gameover-message {
+            font-size: 20px;
+            margin-top: 20px;
+        }
+
+        .button-container {
+            margin-top: 20px;
+        }
+
+        .button-container button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h2>Number Sequence Game</h2>
+        <div class="sequence" id="sequenceDisplay"></div>
+        <div class="input-container">
+            <label for="userInput">Enter the next number in the sequence: </label>
+            <input type="number" id="userInput" min="1" max="4">
+        </div>
+        <div class="gameover-message" id="gameOverMessage"></div>
+        <div class="button-container">
+            <button id="restartButton" style="display: none;" onclick="startGame()">Play Again</button>
+        </div>
+    </div>
+
+    <script src="game.js" defer></script>
+</body>
+</html>
